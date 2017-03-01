@@ -103,7 +103,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 Log.e("URL: ", url);
                 task.execute(url, "Get Emps");
                 task = new GetAvailableParkingSpacesTask(mUpdateEmpListener, mGetAllLicensesListener);
-                        url = APP_URL + "getLicenses.php";
+                        url = APP_URL + "getSpace.php";
                 Log.e("URL: ", url);
                 task.execute(url, "Get Licenses");
                 break;

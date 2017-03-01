@@ -119,7 +119,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (view.getId()) {
+        switch (parent.getId()) {
             case R.id.assign_user_spinner:
                 mEmpChoice = (String) parent.getItemAtPosition(position);
                 Log.e("Spinner Choice:", mEmpChoice);

@@ -13,7 +13,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AddLotFragment.AddLotListener,
         AddSpaceFragment.AddSpaceListener, AddEmpFragment.AddEmpListener,
         UpdateEmpFragment.UpdateEmpListener, MainFragment.GetAllLots, MainFragment.GetAllUsers,
-        MainFragment.GetAllSpaces {
+        MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener {
 
     private List<String> mSSN;
     private List<String> mLicense;
@@ -115,6 +115,21 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) mSSN);
         b.putStringArrayList("spaces", (ArrayList<String>) array);
+        AssignEmployeeSpaceFragment frag = new AssignEmployeeSpaceFragment();
+        frag.setArguments(b);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, frag, "Assign Space")
+                .addToBackStack(null).commit();
+    }
+
+    @Override
+    public void assignEmployeeSpace(String result) {
+        FragmentManager fragmentManager = getFragmentManager();
+        ResultDialog resultDialog = new ResultDialog();
+        Bundle b = new Bundle();
+        b.putString("result", result);
+        resultDialog.setArguments(b);
+        resultDialog.show(fragmentManager, "Assign Space Dialog");
     }
 
 

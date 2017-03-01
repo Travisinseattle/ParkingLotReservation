@@ -71,7 +71,7 @@ public class UpdateUserTask extends AsyncTask<String, Void, String> {
         try {
             mlistener.updateEmp(result);
         } catch (Exception e) {
-            Log.e("FireListenerAddSpace", e.getMessage());
+            Log.e("FireListenerAddUSER", e.getMessage());
         }
     }
 }

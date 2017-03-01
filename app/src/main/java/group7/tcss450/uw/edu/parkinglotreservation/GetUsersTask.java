@@ -79,13 +79,13 @@ public class GetUsersTask extends AsyncTask<String, Void, String> {
                 users.add(lot);
             }
         } catch (Exception e) {
-            Log.e("GetLotsFirelistener", e.getMessage());
+            Log.e("GetUsersFirelistener", e.getMessage());
         }
 
         try {
             mGetUsersListener.getAllUsersUpdate(users, value);
         } catch (Exception e) {
-            Log.e("GetLots Fail", e.getMessage());
+            Log.e("GetUsers Fail", e.getMessage());
         }
     }
 }

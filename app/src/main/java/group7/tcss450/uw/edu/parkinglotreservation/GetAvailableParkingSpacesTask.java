@@ -76,13 +76,13 @@ public class GetAvailableParkingSpacesTask extends AsyncTask<String, Void, Strin
                 spaces.add(space);
             }
         } catch (Exception e) {
-            Log.e("GetLotsFirelistener", e.getMessage());
+            Log.e("GetAvailableSpacesFail", e.getMessage());
         }
 
         try {
             mGetAllSpaces.getAllSpaces(spaces);
         } catch (Exception e) {
-            Log.e("GetLots Fail", e.getMessage());
+            Log.e("GetAllSpaces Fail", e.getMessage());
         }
     }
 }

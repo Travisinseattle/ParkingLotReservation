@@ -7,13 +7,15 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AddLotFragment.AddLotListener,
         AddSpaceFragment.AddSpaceListener, AddEmpFragment.AddEmpListener,
         UpdateEmpFragment.UpdateEmpListener, MainFragment.GetAllLots, MainFragment.GetAllUsers,
-        MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener {
+        MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener, MainFragment.GetAllUnassignedUsers {
 
     private List<String> mSSN;
     private List<String> mLicense;
@@ -89,25 +91,15 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
     }
 
     @Override
-    public void getAllUsersUpdate(List<String> array, int value) {
+    public void getAllUsersUpdate(List<String> array) {
         Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) array);
-        switch (value) {
-            case 0:
-                UpdateEmpFragment  updateEmpFragment = new UpdateEmpFragment();
-                updateEmpFragment.setArguments(b);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, updateEmpFragment, "Get Employees")
-                        .addToBackStack(null).commit();
-                break;
-            case 1:
-                mSSN = array;
-                break;
-            case 2:
-                break;
-            default:
-                break;
-        }
+
+        UpdateEmpFragment  updateEmpFragment = new UpdateEmpFragment();
+        updateEmpFragment.setArguments(b);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, updateEmpFragment, "Get Employees")
+                .addToBackStack(null).commit();
     }
 
     @Override
@@ -130,6 +122,20 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Assign Space Dialog");
+    }
+
+    @Override
+    public void getAllUnassignedUsersUpdate(List<String> users, List<String> spaces) {
+        Bundle b = new Bundle();
+        Log.e("TESTUSERS", users.toString());
+        Log.e("TESTSPACES", spaces.toString());
+        b.putStringArrayList("emps", (ArrayList<String>) users);
+        b.putStringArrayList("spaces", (ArrayList<String>) spaces);
+        AssignEmployeeSpaceFragment  frag = new AssignEmployeeSpaceFragment();
+        frag.setArguments(b);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, frag, "Get Employees")
+                .addToBackStack(null).commit();
     }
 
 

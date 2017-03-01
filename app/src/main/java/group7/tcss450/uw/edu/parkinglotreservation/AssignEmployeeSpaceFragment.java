@@ -76,14 +76,18 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
         ArrayList<String> spaces;
         try {
             emps = getArguments().getStringArrayList("emps");
-            spaces = getArguments().getStringArrayList("spaces");
             assert emps != null;
             spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
                     android.R.layout.simple_spinner_item, emps);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
             mEmpSpinner.setAdapter(spinnerArrayAdapter);
+        } catch (Exception e) {
+            Log.e("PopulateSpinUsersFail", e.getMessage());
+        }
 
+        try {
+            spaces = getArguments().getStringArrayList("spaces");
             assert spaces != null;
             spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
                     android.R.layout.simple_spinner_item, spaces);
@@ -91,7 +95,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
                     simple_spinner_dropdown_item); // The drop down view
             mSpaceSpinner.setAdapter(spinnerArrayAdapter);
         } catch (Exception e) {
-            Log.e("PopulateSpinAssignFail", e.getMessage());
+            Log.e("PopulateSpinSpaceFail", e.getMessage());
         }
     }
 
@@ -104,9 +108,9 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
                     String id = mEmpChoice + ":" + mSpaceChoice;
                     task = new AssignEmpSpaceTask(mListener, id, mEmpChoice, mSpaceChoice,
                             mRate.getText().toString());
-                    String url = APP_URL + "assignSpace.php?ssn='" + mEmpChoice
-                            + "'&id='" + id + "'&space='" + mSpaceChoice + "'&rate='" +
-                            mRate.getText().toString() + "'";
+                    String url = APP_URL + "assignSpace.php?ssn=" + mEmpChoice
+                            + "&id=" + id + "&space=" + mSpaceChoice + "&rate=" +
+                            mRate.getText().toString();
                     Log.e("URL: ", url);
                     task.execute(url, "Update Employee");
                     getActivity().onBackPressed();

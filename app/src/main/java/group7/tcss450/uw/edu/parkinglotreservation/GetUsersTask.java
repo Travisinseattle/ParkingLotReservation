@@ -23,13 +23,11 @@ public class GetUsersTask extends AsyncTask<String, Void, String> {
 
     private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
     private MainFragment.GetAllUsers mGetUsersListener;
-    private int value;
 
     GetUsersTask(UpdateEmpFragment.UpdateEmpListener updateEmpListener,
-                 MainFragment.GetAllUsers getAllUsers, int value) {
+                 MainFragment.GetAllUsers getAllUsers) {
         this.mUpdateEmpListener = updateEmpListener;
         this.mGetUsersListener = getAllUsers;
-        this.value = value;
     }
 
     @Override
@@ -83,7 +81,7 @@ public class GetUsersTask extends AsyncTask<String, Void, String> {
         }
 
         try {
-            mGetUsersListener.getAllUsersUpdate(users, value);
+            mGetUsersListener.getAllUsersUpdate(users);
         } catch (Exception e) {
             Log.e("GetUsers Fail", e.getMessage());
         }

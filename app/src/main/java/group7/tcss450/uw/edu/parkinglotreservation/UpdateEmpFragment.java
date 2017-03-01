@@ -34,7 +34,6 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
     private EditText mAddress;
     private EditText mLicense;
     private Spinner mSpinner;
-    private Button mAdd;
     private String mSpinnerChoice = null;
 
 
@@ -52,7 +51,7 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         mLicense = (EditText) v.findViewById(R.id.update_license_edit);
         mSpinner = (Spinner) v.findViewById(R.id.user_spinner);
         mSpinner.setOnItemSelectedListener(this);
-        mAdd = (Button) v.findViewById(R.id.update_emp_button);
+        Button mAdd = (Button) v.findViewById(R.id.update_emp_button);
         mAdd.setOnClickListener(this);
         return v;
     }

@@ -35,4 +35,5 @@
     <string name="assign_space_text">Assign Employee Parking Space</string>
     <string name="pick_space_text">Pick An Available Space</string>
     <string name="assign_button">Assign Space</string>
+    <string name="rate_hint">Monthly Rate</string>
 </resources>

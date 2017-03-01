@@ -80,7 +80,7 @@ public class AddEmpFragment extends Fragment implements View.OnClickListener {
                         mLicenseNum.setError(getString(R.string.user_error));
                     } else {
                         AsyncTask<String, Void, String> task = null;
-                        task = new AddNewEmpTask(mContext, mListener);
+                        task = new AddNewEmpTask(mListener);
                         String url = APP_URL + "addEmp.php?fname='" + mFirstName.getText() +
                                 "'&lname='" + mLastName.getText() + "'&add='" +
                                 mAddress.getText() + "'&ssn='" + mSSN.getText() + "'&lic='" +

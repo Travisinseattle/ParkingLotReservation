@@ -1,8 +1,8 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -11,17 +11,27 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Travis Holloway on 2/26/2017.
- * A task to add a new Employee
+ * Created by Travis Holloway on 2/28/2017.
+ * A Task to assign an employee parking space.
  */
 
-public class AddNewEmpTask extends AsyncTask<String, Void, String> {
+public class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
 
-    private AddEmpFragment.AddEmpListener mListener;
+    private AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener;
+    private String spaceID;
+    private String mSSN;
+    private String mSpace;
+    private String mRate;
 
-    AddNewEmpTask(final AddEmpFragment.AddEmpListener addEmpListener) {
-        this.mListener = addEmpListener;
+    AssignEmpSpaceTask(AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener,
+                       String id, String mEmpChoice, String mSpaceChoice, String mRate) {
+        this.mListener = mListener;
+        this.mSSN = mEmpChoice;
+        this.mSpace = mSpaceChoice;
+        this.mRate = mRate;
     }
+
+
 
     @Override
     protected String doInBackground(String... strings) {
@@ -54,17 +64,17 @@ public class AddNewEmpTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
 
         if (result.equals("")) {
-            result = "New Employee Added Successfully";
+            result = "Employee: " + mSSN + "Successfully Assigned Space: " + mSpace +
+                    "At the following monthly rate: " + mRate;
         }
-
         FireListener(result);
     }
 
     private void FireListener(String result) {
         try {
-            mListener.addEmp(result);
+            mListener.assignEmployeeSpace(result);
         } catch (Exception e) {
-            Log.e("FireListenerAddEmp", e.getMessage());
+            Log.e("AssignEmployeeSpaceFail", e.getMessage());
         }
     }
 }

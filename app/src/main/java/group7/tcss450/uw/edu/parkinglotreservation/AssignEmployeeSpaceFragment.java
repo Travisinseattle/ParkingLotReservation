@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -28,10 +29,10 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
     private AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener;
     private Spinner mEmpSpinner;
     private Spinner mSpaceSpinner;
-    private Button mButton;
     private Context mContext;
     private String mEmpChoice;
     private String mSpaceChoice;
+    private EditText mRate;
 
 
     public AssignEmployeeSpaceFragment() {
@@ -44,12 +45,13 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_assign_employee_space, container, false);
-        mButton = (Button) v.findViewById(R.id.assign_space_button);
+        Button mButton = (Button) v.findViewById(R.id.assign_space_button);
         mButton.setOnClickListener(this);
         mEmpSpinner = (Spinner) v.findViewById(R.id.assign_user_spinner);
         mEmpSpinner.setOnItemSelectedListener(this);
         mSpaceSpinner = (Spinner) v.findViewById(R.id.assign_space_spinner);
         mSpaceSpinner.setOnItemSelectedListener(this);
+        mRate = (EditText) v.findViewById(R.id.rate_edit);
         return v;
     }
 
@@ -90,7 +92,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
             mSpaceSpinner.setAdapter(spinnerArrayAdapter);
         } catch (Exception e) {
             Log.e("PopulateSpinAssignFail", e.getMessage());
-        }       
+        }
     }
 
     @Override
@@ -99,13 +101,15 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
             switch (v.getId()) {
                 case R.id.assign_space_button:
                     AsyncTask<String, Void, String> task = null;
-//                    task =
-//                    String url = APP_URL + "updateEMP.php?ssn='" + mSpinnerChoice
-//                            + "'&add='" + mAddress.getText() + "'&lic='" +
-//                            mLicense.getText() + "'";
-//                    Log.e("URL: ", url);
-//                    task.execute(url, "Update Employee");
-//                    getActivity().onBackPressed();
+                    String id = mEmpChoice + ":" + mSpaceChoice;
+                    task = new AssignEmpSpaceTask(mListener, id, mEmpChoice, mSpaceChoice,
+                            mRate.getText().toString());
+                    String url = APP_URL + "assignSpace.php?ssn='" + mEmpChoice
+                            + "'&id='" + id + "'&space='" + mSpaceChoice + "'&rate='" +
+                            mRate.getText().toString() + "'";
+                    Log.e("URL: ", url);
+                    task.execute(url, "Update Employee");
+                    getActivity().onBackPressed();
                     break;
                 default:
                     break;

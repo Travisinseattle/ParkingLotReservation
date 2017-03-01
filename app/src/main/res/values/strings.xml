@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">ParkingLotReservation</string>
+    <string name="add_lot">Add a New Lot</string>
+    <string name="add_emp">Add New Employee</string>
+    <string name="add_space">Add New Parking Space</string>
+    <string name="update_employee">Update Existing Employee</string>
+    <string name="assign_space">Assign Employee Space</string>
+    <string name="reserve_space">Reserve Visitor Parking Space</string>
+    <string name="lot_hint">Lot Name</string>
+    <string name="add_button">Add</string>
+    <string name="add_space_text">Add A New Parking Space</string>
+    <string name="lot_name_hint">Name of Lot</string>
+    <string name="space_name_hint">Space Number</string>
+    <string name="add_emp_text">Add New Employee</string>
+    <string name="emp_first_name_hint">First Name</string>
+    <string name="emp_last_name_hint">Last Name</string>
+    <string name="address_hint">Address</string>
+    <string name="license_hint">License #</string>
+    <string name="add_lot_text">Add New Parking Lot</string>
+    <string name="add_lot_php">addLot.php?lot_name=</string>
+    <string name="add_space_php_text">addSpace.php?lot_name=\'</string>
+    <string name="user_error">Value Cannot Be Blank, Please Try Again</string>
+    <string name="ssn_hint">SSN: 555–55-5555</string>
+    <string name="update_employee_text">SSN of Employee To Update</string>
+    <string name="choose_the_lot">Choose the Lot</string>
+    <string name="cap_hint">Capacity</string>
+    <string name="num_floors_hint"># of floors</string>
+    <string name="loc_hint">Location</string>
+    <string name="covered_checkbox_text">Parking Space Is Covered</string>
+    <string name="visitor_checkbox_text">Visitor Parking Space</string>
+    <string name="pick_employee_text">Choose an Employee to Update</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="assign_space_text">Assign Employee Parking Space</string>
+    <string name="pick_space_text">Pick An Available Space</string>
+    <string name="assign_button">Assign Space</string>
+</resources>

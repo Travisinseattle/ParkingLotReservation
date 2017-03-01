@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group7.tcss450.uw.edu.parkinglotreservation.MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/update_employee_text"
+        android:textSize="@dimen/font_size_large"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_employee_text"
+            android:textSize="@dimen/font_size"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_spinner"
+            android:background="@drawable/customborder"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/address_hint"
+            android:id="@+id/update_address_edit"
+            android:background="@drawable/customborder"
+            android:textSize="@dimen/font_size"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/license_hint"
+            android:id="@+id/update_license_edit"
+            android:background="@drawable/customborder"
+            android:textSize="@dimen/font_size"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+
+
+        <Button
+            android:text="@string/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/update_emp_button"
+            android:textSize="@dimen/font_size"/>
+
+    </LinearLayout>
+
+</LinearLayout>

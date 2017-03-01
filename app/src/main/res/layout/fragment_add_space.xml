@@ -1,0 +1,83 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="group7.tcss450.uw.edu.parkinglotreservation.AddSpaceFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_space_text"
+        android:textSize="@dimen/font_size_large"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_the_lot"
+            android:textSize="@dimen/font_size"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lots_spinner"
+            android:background="@drawable/customborder" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/space_name_hint"
+            android:ems="10"
+            android:id="@+id/space_number"
+            android:background="@drawable/customborder"
+            android:textSize="@dimen/font_size"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/covered_checkbox"
+            android:text="@string/covered_checkbox_text"
+            android:gravity="center"
+            android:background="@drawable/customborder"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_size" />
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/visitor_checkbox"
+            android:text="@string/visitor_checkbox_text"
+            android:gravity="center"
+            android:background="@drawable/customborder"/>
+
+        <Button
+            android:text="@string/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_space_button"
+            android:textSize="@dimen/font_size"/>
+
+    </LinearLayout>
+
+</FrameLayout>

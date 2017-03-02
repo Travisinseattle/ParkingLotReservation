@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String result = String.valueOf(getArguments());
+            String result = getArguments().getString("result");
             builder.setTitle("Activity Result");
             builder.setMessage(result);
 

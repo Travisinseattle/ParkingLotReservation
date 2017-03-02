@@ -63,8 +63,8 @@ public class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if (result.equals("")) {
-            result = "Employee: " + mSSN + "Successfully Assigned Space: " + mSpace +
+        if (result.equals("{\"result\", \"yay\"}")) {
+            result = "Employee: " + mSSN + " Successfully Assigned Space: " + mSpace +
                     " At the following monthly rate: $" + mRate;
         }
         FireListener(result);

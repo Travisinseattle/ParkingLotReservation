@@ -18,9 +18,20 @@ import java.net.URL;
 public class AddNewEmpTask extends AsyncTask<String, Void, String> {
 
     private AddEmpFragment.AddEmpListener mListener;
+    private String fName;
+    private String lName;
+    private String address;
+    private String ssn;
+    private String license;
 
-    AddNewEmpTask(final AddEmpFragment.AddEmpListener addEmpListener) {
+    AddNewEmpTask(final AddEmpFragment.AddEmpListener addEmpListener,
+                  String first, String last, String add, String ssn, String lic) {
         this.mListener = addEmpListener;
+        this.fName = first;
+        this.lName = last;
+        this.address = add;
+        this.ssn = ssn;
+        this.license = lic;
     }
 
     @Override
@@ -53,8 +64,9 @@ public class AddNewEmpTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if (result.equals("")) {
-            result = "New Employee Added Successfully";
+        if (result.equals("{\"result\", \"yay\"}")) {
+            result = "New Employee Added Successfully:\n" + fName + "\n" + lName + "\n" +
+                    address + "\n" + ssn + "\n" + license;
         }
 
         FireListener(result);

@@ -105,14 +105,14 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
                         toast.show();
                     } else {
                         AsyncTask<String, Void, String> task = null;
-                        final String spaceID = mSpinnerChoice + ":" + mSpaceNum.getText();
+                        final String spaceID = mSpinnerChoice + ":" + mSpaceNum.getText().toString();
                         task = new AddNewSpaceTask(mContext, mListener, mSpinnerChoice,
                                 mSpaceNum.getText().toString());
                         String url = APP_URL +
-                                getString(R.string.add_space_php_text) + mSpinnerChoice
-                                + "'&cov=" + mCovChecked + "&vis=" + mVisChecked +
-                                "&space_num='"  + mSpaceNum.getText() + "'&spaceID='" +
-                                spaceID + "'";
+                                "addSpace.php?lot_name=" + mSpinnerChoice
+                                + "&cov=" + mCovChecked + "&vis=" + mVisChecked +
+                                "&space_num="  + mSpaceNum.getText().toString() + "&spaceID=" +
+                                spaceID;
                         Log.e("URL: ", url);
                         task.execute(url, "Add New Space");
                         getActivity().onBackPressed();

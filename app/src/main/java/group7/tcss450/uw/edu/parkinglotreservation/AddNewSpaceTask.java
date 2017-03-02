@@ -56,8 +56,8 @@ public class AddNewSpaceTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        if (result.equals("")) {
-            result = "Space # '" +mSpaceNum + "' Has Been Successfully Added to Lot '" + mLotName;
+        if (result.equals("{\"result\", \"yay\"}")) {
+            result = "Space # " +mSpaceNum + " Has Been Successfully Added to Lot " + mLotName;
         }
 
         FireListener(result);

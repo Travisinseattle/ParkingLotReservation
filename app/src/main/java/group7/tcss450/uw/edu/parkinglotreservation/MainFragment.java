@@ -21,10 +21,10 @@ import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private MainFragment.GetAllLots mGetLotListener;
-    private MainFragment.GetAllUsers mGetUsersListener;
-    private MainFragment.GetAllUnassignedUsers mGetAllUnassignedUsers;
-    private GetAllSpaces mGetAllLicensesListener;
+    private GetAllLots mGetLotListener;
+    private GetAllUsers mGetUsersListener;
+    private GetAllUnassignedUsers mGetAllUnassignedUsers;
+    private GetAllVisitorsUsers mVisitorListener;
     private AddLotFragment.AddLotListener mAddLotListener;
     private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
     private Context mContext;
@@ -63,8 +63,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         mAddLotListener = (AddLotFragment.AddLotListener) context;
         mGetUsersListener = (GetAllUsers) context;
         mUpdateEmpListener = (UpdateEmpFragment.UpdateEmpListener) context;
-        mGetAllLicensesListener = (GetAllSpaces) context;
         mGetAllUnassignedUsers = (GetAllUnassignedUsers) context;
+        mVisitorListener = (GetAllVisitorsUsers) context;
     }
 
     @Override
@@ -107,10 +107,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 task.execute(url, "Get Emps");
                 break;
             case R.id.reserve_space:
-//                ReserveVisitorFragment reserveVisitorFragment = new ReserveVisitorFragment();
-//                this.getFragmentManager().beginTransaction()
-//                        .replace(R.id.fragmentContainer, reserveVisitorFragment, "Reserve Visitor Space Fragment")
-//                        .addToBackStack(null).commit();
+                task = new GetUsersVisitorsTask(mUpdateEmpListener, mVisitorListener);
+                url = APP_URL + "getVisitorSpaces.php";
+                Log.e("URL: ", url);
+                task.execute(url, "Get Emps");
                 break;
             default:
                 break;
@@ -124,6 +124,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
     public interface GetAllUsers {
         void getAllUsersUpdate(List<String> array);
+    }
+
+    public interface GetAllVisitorsUsers {
+        void getAllVisitors(List<String> users, List<String> spaces);
     }
 
     public interface GetAllUnassignedUsers {

@@ -15,7 +15,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AddLotFragment.AddLotListener,
         AddSpaceFragment.AddSpaceListener, AddEmpFragment.AddEmpListener,
         UpdateEmpFragment.UpdateEmpListener, MainFragment.GetAllLots, MainFragment.GetAllUsers,
-        MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener, MainFragment.GetAllUnassignedUsers {
+        MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener,
+        MainFragment.GetAllUnassignedUsers, MainFragment.GetAllVisitorsUsers,
+        ReserveVisitorSpaceFragment.ReserveSpaceListener {
 
     private List<String> mSSN;
     private List<String> mLicense;
@@ -127,8 +129,6 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
     @Override
     public void getAllUnassignedUsersUpdate(List<String> users, List<String> spaces) {
         Bundle b = new Bundle();
-        Log.e("TESTUSERS", users.toString());
-        Log.e("TESTSPACES", spaces.toString());
         b.putStringArrayList("emps", (ArrayList<String>) users);
         b.putStringArrayList("spaces", (ArrayList<String>) spaces);
         AssignEmployeeSpaceFragment  frag = new AssignEmployeeSpaceFragment();
@@ -136,6 +136,28 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, frag, "Get Employees")
                 .addToBackStack(null).commit();
+    }
+
+    @Override
+    public void getAllVisitors(List<String> users, List<String> spaces) {
+        Bundle b = new Bundle();
+        b.putStringArrayList("emps", (ArrayList<String>) users);
+        b.putStringArrayList("spaces", (ArrayList<String>) spaces);
+        ReserveVisitorSpaceFragment frag = new ReserveVisitorSpaceFragment();
+        frag.setArguments(b);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, frag, "Get Employees")
+                .addToBackStack(null).commit();
+    }
+
+    @Override
+    public void reserveSpace(String result) {
+        FragmentManager fragmentManager = getFragmentManager();
+        ResultDialog resultDialog = new ResultDialog();
+        Bundle b = new Bundle();
+        b.putString("result", result);
+        resultDialog.setArguments(b);
+        resultDialog.show(fragmentManager, "Assign Space Dialog");
     }
 
 

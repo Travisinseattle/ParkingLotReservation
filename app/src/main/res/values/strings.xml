@@ -32,4 +32,10 @@
     <string name="pick_space_text">Pick An Available Space</string>
     <string name="assign_button">Assign Space</string>
     <string name="rate_hint">Monthly Rate</string>
+    <string name="reserve_visitor_text">Reserve Space For a Visitor</string>
+    <string name="reserve_employee_text">Employee Making The Reservation</string>
+    <string name="visitor_license_hint">Visitor Licence #</string>
+    <string name="visitor_date_hint">Date</string>
+    <string name="visitor_button">Reserve Space</string>
+    <string name="reserve_space_text">Choose A Space to Reserve</string>
 </resources>

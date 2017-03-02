@@ -17,16 +17,20 @@ import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 /**
  * Created by Travis Holloway on 3/1/2017.
+ * A Task to pull Users and populate a Spinner.
  */
-public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
+
+public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
+
 
     private List<String> users;
     private List<String> spaces;
-    private MainFragment.GetAllUnassignedUsers mListener;
+    private MainFragment.GetAllVisitorsUsers mlistener;
+    private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
 
-    public GetUsersUnassignedTask(MainFragment.GetAllUnassignedUsers mUnassignedListeners) {
-
-        this.mListener = mUnassignedListeners;
+    public GetUsersVisitorsTask(UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener, MainFragment.GetAllVisitorsUsers mVisitorListener) {
+        this.mUpdateEmpListener = mUpdateEmpListener;
+        this.mlistener = mVisitorListener;
     }
 
     @Override
@@ -60,13 +64,18 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         AsyncTask<String, Void, String> task = null;
         task = new GrabUsers();
-        String url = APP_URL + "getUnassignedEmps.php";
+        String url = APP_URL + "getEmps.php";
         Log.e("URL: ", url);
         task.execute(url, "Get U Emps", result);
+
+        if (result.equals("")) {
+            result = "No Users Currently Exist";
+            mUpdateEmpListener.updateEmp(result);
+        }
+        FireListener(result);
     }
 
     private void FireListener(String result) {
-
         try {
             JSONArray jsonArray = new JSONArray(result);
             spaces = new ArrayList<String>();
@@ -79,7 +88,7 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
         }
 
         try {
-            mListener.getAllUnassignedUsersUpdate(users, spaces);
+            mlistener.getAllVisitors(users, spaces);
         } catch (Exception e) {
             Log.e("GetUsers Fail", e.getMessage());
         }

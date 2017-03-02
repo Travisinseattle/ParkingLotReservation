@@ -76,20 +76,20 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_lot:
-                AddLotFragment addLotFragment = new AddLotFragment();
+                final AddLotFragment addLotFragment = new AddLotFragment();
                 this.getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, addLotFragment, "Add Lot Fragment")
                         .addToBackStack(null).commit();
                 break;
             case R.id.add_space:
-                AsyncTask<String, Void, String> task = null;
-                task = new GetLotsTask(mContext, mGetLotListener, mAddLotListener);
+                 AsyncTask<String, Void, String> task =
+                        new GetLotsTask(mGetLotListener, mAddLotListener);
                 String url = APP_URL + "getLots.php";
                 Log.e("URL: ", url);
                 task.execute(url, "Get Lots");
                 break;
             case R.id.add_emp:
-                AddEmpFragment addEmpFragment = new AddEmpFragment();
+                final AddEmpFragment addEmpFragment = new AddEmpFragment();
                 this.getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, addEmpFragment, "Add Employee Fragment")
                         .addToBackStack(null).commit();
@@ -137,5 +137,4 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public interface GetAllSpaces {
         void getAllSpaces(List<String> array);
     }
-
 }

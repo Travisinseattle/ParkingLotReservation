@@ -1,6 +1,5 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,13 +18,13 @@ import java.util.List;
  * A class to Retrieve all Users
  */
 
-public class GetUsersTask extends AsyncTask<String, Void, String> {
+class GetUsersTask extends AsyncTask<String, Void, String> {
 
     private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
     private MainFragment.GetAllUsers mGetUsersListener;
 
-    GetUsersTask(UpdateEmpFragment.UpdateEmpListener updateEmpListener,
-                 MainFragment.GetAllUsers getAllUsers) {
+    GetUsersTask(final UpdateEmpFragment.UpdateEmpListener updateEmpListener,
+                 final MainFragment.GetAllUsers getAllUsers) {
         this.mUpdateEmpListener = updateEmpListener;
         this.mGetUsersListener = getAllUsers;
     }
@@ -37,13 +36,13 @@ public class GetUsersTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
@@ -68,12 +67,11 @@ public class GetUsersTask extends AsyncTask<String, Void, String> {
     }
 
     private void FireListener(String result) {
-        List<String> users = new ArrayList<String>();
+        final List<String> users = new ArrayList<>();
         try {
-            JSONArray jsonArray = new JSONArray(result);
-            users = new ArrayList<String>();
+            final JSONArray jsonArray = new JSONArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
-                String lot = jsonArray.getJSONObject(i).getString("ssn");
+                final String lot = jsonArray.getJSONObject(i).getString("ssn");
                 users.add(lot);
             }
         } catch (Exception e) {

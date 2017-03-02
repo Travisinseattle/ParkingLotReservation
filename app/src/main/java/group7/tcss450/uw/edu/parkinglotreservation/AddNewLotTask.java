@@ -1,12 +1,7 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,16 +11,15 @@ import java.net.URL;
 
 /**
  * Created by Travis Holloway on 2/24/2017.
+ * A Task to add a new Lot to the Database.
  */
 
-public class AddNewLotTask extends AsyncTask<String, Void, String> {
+class AddNewLotTask extends AsyncTask<String, Void, String> {
 
     private AddLotFragment.AddLotListener mListener;
-    private Context mContext;
     private String value;
 
-    AddNewLotTask(Context context, AddLotFragment.AddLotListener addLotListener, String value) {
-        this.mContext = context;
+    AddNewLotTask(final AddLotFragment.AddLotListener addLotListener, final String value) {
         this.mListener = addLotListener;
         this.value = value;
     }
@@ -37,13 +31,13 @@ public class AddNewLotTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }

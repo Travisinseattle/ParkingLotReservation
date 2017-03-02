@@ -2,7 +2,6 @@ package group7.tcss450.uw.edu.parkinglotreservation;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -15,16 +14,15 @@ import java.net.URL;
  * A Task to assign an employee parking space.
  */
 
-public class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
+class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
 
     private AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener;
-    private String spaceID;
     private String mSSN;
     private String mSpace;
     private String mRate;
 
-    AssignEmpSpaceTask(AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener,
-                       String id, String mEmpChoice, String mSpaceChoice, String mRate) {
+    AssignEmpSpaceTask(final AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener mListener,
+                       final String mEmpChoice, final String mSpaceChoice, final String mRate) {
         this.mListener = mListener;
         this.mSSN = mEmpChoice;
         this.mSpace = mSpaceChoice;
@@ -40,13 +38,13 @@ public class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
@@ -62,7 +60,6 @@ public class AssignEmpSpaceTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-
         if (result.equals("{\"result\", \"yay\"}")) {
             result = "Employee: " + mSSN + " Successfully Assigned Space: " + mSpace +
                     " At the following monthly rate: $" + mRate;

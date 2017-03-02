@@ -1,6 +1,5 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,14 +15,16 @@ import java.util.List;
 
 /**
  * Created by Travis Holloway on 2/27/2017.
+ * A Task to retrieve all Lots.
  */
 
-public class GetLotsTask extends AsyncTask<String, Void, String> {
+class GetLotsTask extends AsyncTask<String, Void, String> {
 
     private AddLotFragment.AddLotListener mListener;
     private MainFragment.GetAllLots getListener;
 
-    GetLotsTask(Context context, MainFragment.GetAllLots getAllLots, AddLotFragment.AddLotListener addLotListener) {
+    GetLotsTask(final MainFragment.GetAllLots getAllLots,
+                final AddLotFragment.AddLotListener addLotListener) {
         this.getListener = getAllLots;
         this.mListener = addLotListener;
     }
@@ -35,13 +36,13 @@ public class GetLotsTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
@@ -66,10 +67,9 @@ public class GetLotsTask extends AsyncTask<String, Void, String> {
     }
 
     private void FireListener(String result) {
-        List<String> lots = new ArrayList<String>();
+        final List<String> lots = new ArrayList<>();
         try {
-            JSONArray jsonArray = new JSONArray(result);
-            lots = new ArrayList<String>();
+            final JSONArray jsonArray = new JSONArray(result);
             for (int i = 0; i < jsonArray.length(); i++) {
                 String lot = jsonArray.getJSONObject(i).getString("lotName");
                 lots.add(lot);

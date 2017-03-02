@@ -21,7 +21,6 @@ import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 public class AddEmpFragment extends Fragment implements View.OnClickListener {
 
     private AddEmpFragment.AddEmpListener mListener;
-    private Context mContext;
     EditText mFirstName;
     EditText mLastName;
     EditText mAddress;
@@ -53,7 +52,6 @@ public class AddEmpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = context;
         mListener = (AddEmpFragment.AddEmpListener) context;
     }
 
@@ -79,8 +77,8 @@ public class AddEmpFragment extends Fragment implements View.OnClickListener {
                     } else if (mLicenseNum.getText().toString().trim().length() <= 0) {
                         mLicenseNum.setError(getString(R.string.user_error));
                     } else {
-                        AsyncTask<String, Void, String> task = null;
-                        task = new AddNewEmpTask(mListener, mFirstName.getText().toString(),
+                        AsyncTask<String, Void, String> task =
+                                new AddNewEmpTask(mListener, mFirstName.getText().toString(),
                                 mLastName.getText().toString(),
                                 mAddress.getText().toString(),
                                 mSSN.getText().toString(),

@@ -51,7 +51,7 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         mEmployee.setOnItemSelectedListener(this);
         mSpace = (Spinner) v.findViewById(R.id.visitor_space_spinner);
         mSpace.setOnItemSelectedListener(this);
-        Button b = (Button) v.findViewById(R.id.reserve_space_button);
+        final Button b = (Button) v.findViewById(R.id.reserve_space_button);
         b.setOnClickListener(this);
         return v;
     }
@@ -73,12 +73,12 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
     public void onStart() {
         super.onStart();
         ArrayAdapter<String> spinnerArrayAdapter;
-        ArrayList<String> emps;
-        ArrayList<String> spaces;
+        final ArrayList<String> emps;
+        final ArrayList<String> spaces;
         try {
             emps = getArguments().getStringArrayList("emps");
             assert emps != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, emps);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -90,7 +90,7 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         try {
             spaces = getArguments().getStringArrayList("spaces");
             assert spaces != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, spaces);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -105,12 +105,12 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         if (mListener != null) {
             switch (v.getId()) {
                 case R.id.reserve_space_button:
-                    AsyncTask<String, Void, String> task = null;
-                    String id = mEmpChoice + ":" + mSpaceChoice;
-                    task = new ReserveSpaceTask(mListener, mEmpChoice,
+                    final AsyncTask<String, Void, String> task =
+                            new ReserveSpaceTask(mListener, mEmpChoice,
                             mLicense.getText().toString(),
                             mDate.getText().toString(), mSpaceChoice);
-                    String url = APP_URL + "reserveSpace.php?ssn=" + mEmpChoice
+                    final String id = mEmpChoice + ":" + mSpaceChoice;
+                    final String url = APP_URL + "reserveSpace.php?ssn=" + mEmpChoice
                             + "&id=" + id + "&space=" + mSpaceChoice + "&lic=" +
                             mLicense.getText().toString() + "&date=" + mDate.getText().toString();
                     Log.e("URL: ", url);

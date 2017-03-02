@@ -45,7 +45,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_assign_employee_space, container, false);
-        Button mButton = (Button) v.findViewById(R.id.assign_space_button);
+        final Button mButton = (Button) v.findViewById(R.id.assign_space_button);
         mButton.setOnClickListener(this);
         mEmpSpinner = (Spinner) v.findViewById(R.id.assign_user_spinner);
         mEmpSpinner.setOnItemSelectedListener(this);
@@ -72,12 +72,12 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
     public void onStart() {
         super.onStart();
         ArrayAdapter<String> spinnerArrayAdapter;
-        ArrayList<String> emps;
-        ArrayList<String> spaces;
+        final ArrayList<String> emps;
+        final ArrayList<String> spaces;
         try {
             emps = getArguments().getStringArrayList("emps");
             assert emps != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, emps);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -89,7 +89,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
         try {
             spaces = getArguments().getStringArrayList("spaces");
             assert spaces != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, spaces);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -104,11 +104,11 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
         if (mListener != null) {
             switch (v.getId()) {
                 case R.id.assign_space_button:
-                    AsyncTask<String, Void, String> task = null;
-                    String id = mEmpChoice + ":" + mSpaceChoice;
-                    task = new AssignEmpSpaceTask(mListener, id, mEmpChoice, mSpaceChoice,
+                    final AsyncTask<String, Void, String> task =
+                            new AssignEmpSpaceTask(mListener, mEmpChoice, mSpaceChoice,
                             mRate.getText().toString());
-                    String url = APP_URL + "assignSpace.php?ssn=" + mEmpChoice
+                    final String id = mEmpChoice + ":" + mSpaceChoice;
+                    final String url = APP_URL + "assignSpace.php?ssn=" + mEmpChoice
                             + "&id=" + id + "&space=" + mSpaceChoice + "&rate=" +
                             mRate.getText().toString();
                     Log.e("URL: ", url);
@@ -138,9 +138,7 @@ public class AssignEmployeeSpaceFragment extends Fragment implements View.OnClic
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     public interface AssignEmployeeSpaceListener {
         void assignEmployeeSpace(String result);

@@ -17,14 +17,15 @@ import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 /**
  * Created by Travis Holloway on 3/1/2017.
+ * A Task that grabs all Employees without an assigned parking space.
  */
-public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
+class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
 
     private List<String> users;
     private List<String> spaces;
     private MainFragment.GetAllUnassignedUsers mListener;
 
-    public GetUsersUnassignedTask(MainFragment.GetAllUnassignedUsers mUnassignedListeners) {
+    GetUsersUnassignedTask(final MainFragment.GetAllUnassignedUsers mUnassignedListeners) {
 
         this.mListener = mUnassignedListeners;
     }
@@ -36,13 +37,13 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
@@ -58,9 +59,8 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        AsyncTask<String, Void, String> task = null;
-        task = new GrabUsers();
-        String url = APP_URL + "getUnassignedEmps.php";
+        final AsyncTask<String, Void, String> task = new GrabUsers();
+        final String url = APP_URL + "getUnassignedEmps.php";
         Log.e("URL: ", url);
         task.execute(url, "Get U Emps", result);
     }
@@ -68,8 +68,8 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
     private void FireListener(String result) {
 
         try {
-            JSONArray jsonArray = new JSONArray(result);
-            spaces = new ArrayList<String>();
+            final JSONArray jsonArray = new JSONArray(result);
+            spaces = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 String space = jsonArray.getJSONObject(i).getString("spaceID");
                 spaces.add(space);
@@ -97,13 +97,13 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
             String response = "";
             value = strings[2];
             HttpURLConnection urlConnection = null;
-            String url = strings[0];
+            final String url = strings[0];
             try {
-                URL urlObject = new URL(url);
+                final URL urlObject = new URL(url);
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
-                InputStream content = urlConnection.getInputStream();
-                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                String s = "";
+                final InputStream content = urlConnection.getInputStream();
+                final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s;
                 while ((s = buffer.readLine()) != null) {
                     response += s;
                 }
@@ -120,13 +120,12 @@ public class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPostExecute(String result) {
             try {
-                JSONArray jsonArray = new JSONArray(result);
-                users = new ArrayList<String>();
+                final JSONArray jsonArray = new JSONArray(result);
+                users = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     String user = jsonArray.getJSONObject(i).getString("ssn");
                     users.add(user);
                 }
-                Log.e("TESTTESTTEST", users.toString());
                 FireListener(value);
             } catch (Exception e) {
                 Log.e("GrabUsersUnassigned", e.getMessage());

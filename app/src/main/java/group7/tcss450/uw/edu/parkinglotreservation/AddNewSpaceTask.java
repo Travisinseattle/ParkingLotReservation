@@ -1,6 +1,5 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,18 +11,19 @@ import java.net.URL;
 
 /**
  * Created by Travis Holloway on 2/24/2017.
+ * A Task to update the database with a new Space.
  */
-public class AddNewSpaceTask extends AsyncTask<String, Void, String> {
+class AddNewSpaceTask extends AsyncTask<String, Void, String> {
 
     private AddSpaceFragment.AddSpaceListener mListener;
     private String mLotName;
     private String mSpaceNum;
 
-    AddNewSpaceTask(final Context context, final AddSpaceFragment.AddSpaceListener addSpaceListener,
+    AddNewSpaceTask(final AddSpaceFragment.AddSpaceListener addSpaceListener,
                     final String lotValue, final String spaceValue) {
         this.mListener = addSpaceListener;
-        this.mLotName = lotValue;
         this.mSpaceNum = spaceValue;
+        this.mLotName = lotValue;
     }
 
     @Override
@@ -33,13 +33,13 @@ public class AddNewSpaceTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }

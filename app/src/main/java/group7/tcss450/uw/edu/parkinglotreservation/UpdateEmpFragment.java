@@ -16,8 +16,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
@@ -51,7 +56,7 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         mLicense = (EditText) v.findViewById(R.id.update_license_edit);
         mSpinner = (Spinner) v.findViewById(R.id.user_spinner);
         mSpinner.setOnItemSelectedListener(this);
-        Button mAdd = (Button) v.findViewById(R.id.update_emp_button);
+        final Button mAdd = (Button) v.findViewById(R.id.update_emp_button);
         mAdd.setOnClickListener(this);
         return v;
     }
@@ -72,12 +77,12 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onStart() {
         super.onStart();
-        ArrayAdapter<String> spinnerArrayAdapter;
-        ArrayList<String> emps;
+        final ArrayAdapter<String> spinnerArrayAdapter;
+        final ArrayList<String> emps;
         try {
             emps = getArguments().getStringArrayList("emps");
             assert emps != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, emps);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -99,16 +104,16 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
                     } else if (mLicense.getText().toString().trim().length() <= 0) {
                         mLicense.setError(getString(R.string.user_error));
                     } else if (mSpinnerChoice == null) {
-                        Toast toast = Toast.makeText(mContext, "You Must Choose An Employee",
+                        final Toast toast = Toast.makeText(mContext, "You Must Choose An Employee",
                                 Toast.LENGTH_LONG);
                         toast.show();
                     } else {
-                        AsyncTask<String, Void, String> task = null;
-                        task = new UpdateUserTask(mContext, mListener, mSpinnerChoice,
+                        final AsyncTask<String, Void, String> task =
+                                new UpdateUserTask(mListener, mSpinnerChoice,
                                 mAddress.getText().toString(), mLicense.getText().toString());
-                        String url = APP_URL + "updateEMP.php?ssn='" + mSpinnerChoice
-                                + "'&add='" + mAddress.getText() + "'&lic='" +
-                                mLicense.getText() + "'";
+                        final String url = APP_URL + "updateEMP.php?ssn=" + mSpinnerChoice
+                                + "&add=" + mAddress.getText() + "&lic=" +
+                                mLicense.getText();
                         Log.e("URL: ", url);
                         task.execute(url, "Update Employee");
                         getActivity().onBackPressed();
@@ -123,6 +128,10 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSpinnerChoice = (String) parent.getItemAtPosition(position);
+        final AsyncTask<String, Void, String> task = new PopulateFields();
+        final String url = APP_URL + "getEmpInfo.php?ssn=" + mSpinnerChoice;
+        Log.e("URL: ", url);
+        task.execute(url, "Populate Fields");
     }
 
     @Override
@@ -132,5 +141,48 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
 
     public interface UpdateEmpListener {
         void updateEmp(String result);
+    }
+
+    private class PopulateFields extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            if (strings.length != 2) {
+                throw new IllegalArgumentException("2 String arguments required.");
+            }
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            final String url = strings[0];
+            try {
+                final URL urlObject = new URL(url);
+                urlConnection = (HttpURLConnection) urlObject.openConnection();
+                final InputStream content = urlConnection.getInputStream();
+                final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s;
+                while ((s = buffer.readLine()) != null) {
+                    response += s;
+                }
+            } catch (Exception e) {
+                response = "Unable to connect, Reason: "
+                        + e.getMessage();
+            } finally {
+                if (urlConnection != null)
+                    urlConnection.disconnect();
+            }
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                final JSONArray jsonArray = new JSONArray(result);
+                mAddress.setText(jsonArray.getJSONObject(0).getString("emp_address"));
+                mAddress.setHint(jsonArray.getJSONObject(0).getString("emp_address"));
+                mLicense.setText(jsonArray.getJSONObject(0).getString("vehicleLNum"));
+                mLicense.setHint(jsonArray.getJSONObject(0).getString("vehicleLNum"));
+            } catch (Exception e) {
+                Log.e("GrabUsersUnassigned", e.getMessage());
+            }
+        }
     }
 }

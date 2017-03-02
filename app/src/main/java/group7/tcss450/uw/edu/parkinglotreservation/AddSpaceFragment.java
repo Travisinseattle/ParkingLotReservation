@@ -56,7 +56,7 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
         covered.setOnCheckedChangeListener(this);
         final CheckBox visitor = (CheckBox) v.findViewById(R.id.visitor_checkbox);
         visitor.setOnCheckedChangeListener(this);
-        Button b = (Button) v.findViewById(R.id.add_space_button);
+        final Button b = (Button) v.findViewById(R.id.add_space_button);
         b.setOnClickListener(this);
         return v;
     }
@@ -72,11 +72,11 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
     public void onStart() {
         super.onStart();
         ArrayAdapter<String> spinnerArrayAdapter;
-        ArrayList<String> lots;
+        final ArrayList<String> lots;
         try {
             lots = getArguments().getStringArrayList("lots");
             assert lots != null;
-            spinnerArrayAdapter = new ArrayAdapter<String>(mContext,
+            spinnerArrayAdapter = new ArrayAdapter<>(mContext,
                     android.R.layout.simple_spinner_item, lots);
             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.
                     simple_spinner_dropdown_item); // The drop down view
@@ -100,15 +100,15 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
                     if (mSpaceNum.getText().toString().trim().length() <= 0) {
                         mSpaceNum.setError(getString(R.string.user_error));
                     } else if (mSpinnerChoice == null) {
-                        Toast toast = Toast.makeText(mContext, "You Must Choose A Lot",
+                        final Toast toast = Toast.makeText(mContext, "You Must Choose A Lot",
                                 Toast.LENGTH_LONG);
                         toast.show();
                     } else {
-                        AsyncTask<String, Void, String> task = null;
-                        final String spaceID = mSpinnerChoice + ":" + mSpaceNum.getText().toString();
-                        task = new AddNewSpaceTask(mContext, mListener, mSpinnerChoice,
+                        final AsyncTask<String, Void, String> task =
+                                new AddNewSpaceTask(mListener, mSpinnerChoice,
                                 mSpaceNum.getText().toString());
-                        String url = APP_URL +
+                        final String spaceID = mSpinnerChoice + ":" + mSpaceNum.getText().toString();
+                        final String url = APP_URL +
                                 "addSpace.php?lot_name=" + mSpinnerChoice
                                 + "&cov=" + mCovChecked + "&vis=" + mVisChecked +
                                 "&space_num="  + mSpaceNum.getText().toString() + "&spaceID=" +
@@ -130,9 +130,7 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

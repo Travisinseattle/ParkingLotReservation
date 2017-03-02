@@ -1,6 +1,5 @@
 package group7.tcss450.uw.edu.parkinglotreservation;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,7 +14,7 @@ import java.net.URL;
  * A task to add a new Employee
  */
 
-public class AddNewEmpTask extends AsyncTask<String, Void, String> {
+class AddNewEmpTask extends AsyncTask<String, Void, String> {
 
     private AddEmpFragment.AddEmpListener mListener;
     private String fName;
@@ -25,7 +24,8 @@ public class AddNewEmpTask extends AsyncTask<String, Void, String> {
     private String license;
 
     AddNewEmpTask(final AddEmpFragment.AddEmpListener addEmpListener,
-                  String first, String last, String add, String ssn, String lic) {
+                  final String first, final String last, final String add, final String ssn,
+                  final String lic) {
         this.mListener = addEmpListener;
         this.fName = first;
         this.lName = last;
@@ -41,13 +41,13 @@ public class AddNewEmpTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }

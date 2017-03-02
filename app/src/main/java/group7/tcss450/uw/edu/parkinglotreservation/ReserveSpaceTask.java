@@ -14,7 +14,7 @@ import java.net.URL;
  * A task to reserve a visitor Parking Space.
  */
 
-public class ReserveSpaceTask extends AsyncTask<String, Void, String> {
+class ReserveSpaceTask extends AsyncTask<String, Void, String> {
 
     private ReserveVisitorSpaceFragment.ReserveSpaceListener mListener;
     private String ssn;
@@ -22,8 +22,9 @@ public class ReserveSpaceTask extends AsyncTask<String, Void, String> {
     private String license;
     private String date;
 
-    public ReserveSpaceTask(ReserveVisitorSpaceFragment.ReserveSpaceListener mListener,
-                            String mEmpChoice, String license, String date, String space) {
+    ReserveSpaceTask(final ReserveVisitorSpaceFragment.ReserveSpaceListener mListener,
+                     final String mEmpChoice, final String license, final String date,
+                     final String space) {
         this.mListener = mListener;
         this.ssn = mEmpChoice;
         this.license = license;
@@ -38,13 +39,13 @@ public class ReserveSpaceTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }

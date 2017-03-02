@@ -20,7 +20,7 @@ import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
  * A Task to pull Users and populate a Spinner.
  */
 
-public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
+class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
 
 
     private List<String> users;
@@ -28,7 +28,8 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
     private MainFragment.GetAllVisitorsUsers mlistener;
     private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
 
-    public GetUsersVisitorsTask(UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener, MainFragment.GetAllVisitorsUsers mVisitorListener) {
+    GetUsersVisitorsTask(final UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener,
+                         final MainFragment.GetAllVisitorsUsers mVisitorListener) {
         this.mUpdateEmpListener = mUpdateEmpListener;
         this.mlistener = mVisitorListener;
     }
@@ -40,13 +41,13 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
         }
         String response = "";
         HttpURLConnection urlConnection = null;
-        String url = strings[0];
+        final String url = strings[0];
         try {
-            URL urlObject = new URL(url);
+            final URL urlObject = new URL(url);
             urlConnection = (HttpURLConnection) urlObject.openConnection();
-            InputStream content = urlConnection.getInputStream();
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-            String s = "";
+            final InputStream content = urlConnection.getInputStream();
+            final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+            String s;
             while ((s = buffer.readLine()) != null) {
                 response += s;
             }
@@ -62,9 +63,8 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        AsyncTask<String, Void, String> task = null;
-        task = new GrabUsers();
-        String url = APP_URL + "getEmps.php";
+        final AsyncTask<String, Void, String> task = new GrabUsers();
+        final String url = APP_URL + "getEmps.php";
         Log.e("URL: ", url);
         task.execute(url, "Get U Emps", result);
 
@@ -77,8 +77,8 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
 
     private void FireListener(String result) {
         try {
-            JSONArray jsonArray = new JSONArray(result);
-            spaces = new ArrayList<String>();
+            final JSONArray jsonArray = new JSONArray(result);
+            spaces = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 String space = jsonArray.getJSONObject(i).getString("spaceID");
                 spaces.add(space);
@@ -106,13 +106,13 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
             String response = "";
             value = strings[2];
             HttpURLConnection urlConnection = null;
-            String url = strings[0];
+            final String url = strings[0];
             try {
-                URL urlObject = new URL(url);
+                final URL urlObject = new URL(url);
                 urlConnection = (HttpURLConnection) urlObject.openConnection();
-                InputStream content = urlConnection.getInputStream();
-                BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
-                String s = "";
+                final InputStream content = urlConnection.getInputStream();
+                final BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                String s;
                 while ((s = buffer.readLine()) != null) {
                     response += s;
                 }
@@ -129,8 +129,8 @@ public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPostExecute(String result) {
             try {
-                JSONArray jsonArray = new JSONArray(result);
-                users = new ArrayList<String>();
+                final JSONArray jsonArray = new JSONArray(result);
+                users = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     String user = jsonArray.getJSONObject(i).getString("ssn");
                     users.add(user);

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +17,6 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         MainFragment.GetAllSpaces, AssignEmployeeSpaceFragment.AssignEmployeeSpaceListener,
         MainFragment.GetAllUnassignedUsers, MainFragment.GetAllVisitorsUsers,
         ReserveVisitorSpaceFragment.ReserveSpaceListener {
-
-    private List<String> mSSN;
-    private List<String> mLicense;
 
     public final static String APP_URL =
             "http://cssgate.insttech.washington.edu/~thollow/parking_lot/";
@@ -43,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void addLot(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Add Lot");
@@ -53,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void addSpace(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Add Space");
@@ -63,9 +59,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void addEmp(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Add Emp");
@@ -73,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void updateEmp(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Update Employee");
@@ -83,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void getAllLots(List<String> array) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putStringArrayList("lots", (ArrayList<String>) array);
-        AddSpaceFragment spaceFragment = new AddSpaceFragment();
+        final AddSpaceFragment spaceFragment = new AddSpaceFragment();
         spaceFragment.setArguments(b);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, spaceFragment, "Get Lots")
@@ -94,10 +90,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void getAllUsersUpdate(List<String> array) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) array);
-
-        UpdateEmpFragment  updateEmpFragment = new UpdateEmpFragment();
+        final UpdateEmpFragment  updateEmpFragment = new UpdateEmpFragment();
         updateEmpFragment.setArguments(b);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, updateEmpFragment, "Get Employees")
@@ -106,10 +101,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void getAllSpaces(List<String> array) {
-        Bundle b = new Bundle();
-        b.putStringArrayList("emps", (ArrayList<String>) mSSN);
+        final Bundle b = new Bundle();
         b.putStringArrayList("spaces", (ArrayList<String>) array);
-        AssignEmployeeSpaceFragment frag = new AssignEmployeeSpaceFragment();
+        final AssignEmployeeSpaceFragment frag = new AssignEmployeeSpaceFragment();
         frag.setArguments(b);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, frag, "Assign Space")
@@ -118,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void assignEmployeeSpace(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Assign Space Dialog");
@@ -128,10 +122,10 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void getAllUnassignedUsersUpdate(List<String> users, List<String> spaces) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) users);
         b.putStringArrayList("spaces", (ArrayList<String>) spaces);
-        AssignEmployeeSpaceFragment  frag = new AssignEmployeeSpaceFragment();
+        final AssignEmployeeSpaceFragment  frag = new AssignEmployeeSpaceFragment();
         frag.setArguments(b);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, frag, "Get Employees")
@@ -140,21 +134,21 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
     @Override
     public void getAllVisitors(List<String> users, List<String> spaces) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) users);
         b.putStringArrayList("spaces", (ArrayList<String>) spaces);
-        ReserveVisitorSpaceFragment frag = new ReserveVisitorSpaceFragment();
+        final ReserveVisitorSpaceFragment frag = new ReserveVisitorSpaceFragment();
         frag.setArguments(b);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, frag, "Get Employees")
+                .replace(R.id.fragmentContainer, frag, "Reserve Visitors")
                 .addToBackStack(null).commit();
     }
 
     @Override
     public void reserveSpace(String result) {
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         ResultDialog resultDialog = new ResultDialog();
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putString("result", result);
         resultDialog.setArguments(b);
         resultDialog.show(fragmentManager, "Assign Space Dialog");
@@ -166,18 +160,16 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String result = getArguments().getString("result");
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final String result = getArguments().getString("result");
             builder.setTitle("Activity Result");
             builder.setMessage(result);
-
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dismiss();
                 }
             });
-
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

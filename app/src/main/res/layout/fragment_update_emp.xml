@@ -54,7 +54,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:hint="@string/license_hint"
             android:id="@+id/update_license_edit"
             android:background="@drawable/customborder"

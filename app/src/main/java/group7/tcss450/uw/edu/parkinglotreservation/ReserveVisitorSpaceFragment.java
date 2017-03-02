@@ -140,9 +140,7 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     public interface ReserveSpaceListener {
         void reserveSpace(String result);

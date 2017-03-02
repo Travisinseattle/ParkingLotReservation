@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         final Bundle b = new Bundle();
         b.putStringArrayList("emps", (ArrayList<String>) users);
         b.putStringArrayList("spaces", (ArrayList<String>) spaces);
-        final AssignEmployeeSpaceFragment  frag = new AssignEmployeeSpaceFragment();
+        final AssignEmployeeSpaceFragment frag = new AssignEmployeeSpaceFragment();
         frag.setArguments(b);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, frag, "Get Employees")
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements AddLotFragment.Ad
         final ReserveVisitorSpaceFragment frag = new ReserveVisitorSpaceFragment();
         frag.setArguments(b);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainer, frag, "Reserve Visitors")
+                .replace(R.id.fragmentContainer, frag, "Get Employees")
                 .addToBackStack(null).commit();
     }
 

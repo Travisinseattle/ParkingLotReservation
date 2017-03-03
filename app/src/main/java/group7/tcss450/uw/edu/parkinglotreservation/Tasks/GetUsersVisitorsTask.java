@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,25 +13,58 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import group7.tcss450.uw.edu.parkinglotreservation.Fragments.MainFragment;
+import group7.tcss450.uw.edu.parkinglotreservation.Fragments.UpdateEmpFragment;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 /**
  * Created by Travis Holloway on 3/1/2017.
- * A Task that grabs all Employees without an assigned parking space.
+ * A Task to pull Users and populate a Spinner.
  */
-class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
+public class GetUsersVisitorsTask extends AsyncTask<String, Void, String> {
 
+    /**
+     * An array of employees to be used in populating the employee spinner.
+     */
     private List<String> users;
+
+    /**
+     * An array of parking spaces to be used in populating the parking spaces spinner.
+     */
     private List<String> spaces;
-    private MainFragment.GetAllUnassignedUsers mListener;
 
-    GetUsersUnassignedTask(final MainFragment.GetAllUnassignedUsers mUnassignedListeners) {
+    /**
+     * The GetAllVisitorsListener passed to the class.
+     */
+    private MainFragment.GetAllVisitorsUsers mlistener;
 
-        this.mListener = mUnassignedListeners;
+    /**
+     * The UpdateListener passed to the class.
+     */
+    private UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener;
+
+    /**
+     * The constructor of the class.
+     *
+     * @param mUpdateEmpListener The UpdateListener passed to the class.
+     * @param mVisitorListener The GetAllVisitorsListener passed to the class.
+     */
+    public GetUsersVisitorsTask(final UpdateEmpFragment.UpdateEmpListener mUpdateEmpListener,
+                                final MainFragment.GetAllVisitorsUsers mVisitorListener) {
+        this.mUpdateEmpListener = mUpdateEmpListener;
+        this.mlistener = mVisitorListener;
     }
 
+    /**
+     * Overridden doInBackground() method.  Used to parse the JSON return from the
+     * php url that is provided to the method.
+     *
+     * @param strings array of strings provided by the execute() method.
+     * @return the result of the parsing as a string.
+     */
     @Override
-    protected String doInBackground(String... strings) {
+    protected String doInBackground(final String... strings) {
         if (strings.length != 2) {
             throw new IllegalArgumentException("8 String arguments required.");
         }
@@ -57,16 +90,33 @@ class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
         return response;
     }
 
+    /**
+     * Overridden onPostExecute() method.  Used for any additional processing required before
+     * returning from the Task.
+     *
+     * @param result The result of the parsing done in doInBackground() method.
+     */
     @Override
     protected void onPostExecute(String result) {
         final AsyncTask<String, Void, String> task = new GrabUsers();
-        final String url = APP_URL + "getUnassignedEmps.php";
+        final String url = APP_URL + "getEmps.php";
         Log.e("URL: ", url);
         task.execute(url, "Get U Emps", result);
+
+        if (result.equals("")) {
+            result = "No Users Currently Exist";
+            mUpdateEmpListener.updateEmp(result);
+        }
+        FireListener(result);
     }
 
-    private void FireListener(String result) {
-
+    /**
+     * A method to utilize the customer listener interface and pass the result back
+     * to MainActivity.
+     *
+     * @param result The final result of the parsing of the json request.
+     */
+    private void FireListener(final String result) {
         try {
             final JSONArray jsonArray = new JSONArray(result);
             spaces = new ArrayList<>();
@@ -79,16 +129,26 @@ class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
         }
 
         try {
-            mListener.getAllUnassignedUsersUpdate(users, spaces);
+            mlistener.getAllVisitors(users, spaces);
         } catch (Exception e) {
             Log.e("GetUsers Fail", e.getMessage());
         }
     }
 
+    /**
+     * Inner class Async Task, used to pull the Employees from the database.
+     */
     private class GrabUsers extends AsyncTask<String, Void, String> {
 
         private String value;
 
+        /**
+         * Overridden doInBackground() method.  Used to parse the JSON return from the
+         * php url that is provided to the method.
+         *
+         * @param strings array of strings provided by the execute() method.
+         * @return the result of the parsing as a string.
+         */
         @Override
         protected String doInBackground(String... strings) {
             if (strings.length != 3) {
@@ -126,6 +186,7 @@ class GetUsersUnassignedTask extends AsyncTask<String, Void, String> {
                     String user = jsonArray.getJSONObject(i).getString("ssn");
                     users.add(user);
                 }
+                Log.e("TESTTESTTEST", users.toString());
                 FireListener(value);
             } catch (Exception e) {
                 Log.e("GrabUsersUnassigned", e.getMessage());

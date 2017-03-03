@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Fragments;
 
 
 import android.content.Context;
@@ -12,28 +12,66 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import group7.tcss450.uw.edu.parkinglotreservation.Tasks.AddNewEmpTask;
+import group7.tcss450.uw.edu.parkinglotreservation.R;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment class used to add Employees to the data base.
  */
 public class AddEmpFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * The listener defined in the class.
+     */
     private AddEmpFragment.AddEmpListener mListener;
-    EditText mFirstName;
-    EditText mLastName;
-    EditText mAddress;
-    EditText mSSN;
-    EditText mLicenseNum;
+
+    /**
+     * The first name EditText.
+     */
+    private EditText mFirstName;
+
+    /**
+     * The last name EditText.
+     */
+    private EditText mLastName;
+
+    /**
+     * The address EditText.
+     */
+    private EditText mAddress;
+
+    /**
+     * The SSN EditText.
+     */
+    private EditText mSSN;
+
+    /**
+     * The license EditText.
+     */
+    private EditText mLicenseNum;
+
+    /**
+     *  The add Button.
+     */
     Button mAdd;
 
+    /**
+     * Required empty public constructor
+     */
+    public AddEmpFragment() {}
 
-    public AddEmpFragment() {
-        // Required empty public constructor
-    }
-
-
+    /**
+     * onCreate Method.
+     *
+     * @param inflater the LayoutInflator.
+     * @param container The ViewGroup container.
+     * @param savedInstanceState The Bundle for savedInstanceState.
+     *
+     * @return the View that is created through the inflator.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,18 +87,32 @@ public class AddEmpFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * Overridden onAttach() method.
+     *
+     * @param context The context of the super class.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mListener = (AddEmpFragment.AddEmpListener) context;
     }
 
+    /**
+     * Overridden onDetach() method. Sets the listener(s) NULL.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Overridden onClick method, determines the behavior of any objects that have a
+     * onClickListener.
+     *
+     * @param v The parent view.
+     */
     @Override
     public void onClick(View v) {
         if (mListener != null) {
@@ -100,6 +152,9 @@ public class AddEmpFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Customer Listener interface. Used to display the JSON return.
+     */
     public interface AddEmpListener {
         void addEmp(String result);
     }

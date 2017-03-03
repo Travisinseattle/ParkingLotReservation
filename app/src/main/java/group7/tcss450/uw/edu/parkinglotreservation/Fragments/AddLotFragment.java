@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Fragments;
 
 
 import android.content.Context;
@@ -12,26 +12,56 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import group7.tcss450.uw.edu.parkinglotreservation.Tasks.AddNewLotTask;
+import group7.tcss450.uw.edu.parkinglotreservation.R;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment class used to add parking lots to the database.
  */
 public class AddLotFragment extends Fragment implements View.OnClickListener {
 
+    /**
+     * The listener defined in the class.
+     */
     private AddLotListener addLotListener;
+
+    /**
+     * The lot name EditText.
+     */
     EditText mNameEdit;
+
+    /**
+     * The location EditText.
+     */
     EditText mLocEdit;
+
+    /**
+     * The capacity EditText.
+     */
     EditText mCapEdit;
+
+    /**
+     * The floor EditText.
+     */
     EditText mFloorEdit;
 
+    /**
+     * Required empty public constructor
+     */
+    public AddLotFragment() {}
 
-    public AddLotFragment() {
-        // Required empty public constructor
-    }
-
-
+    /**
+     * onCreate Method.
+     *
+     * @param inflater the LayoutInflator.
+     * @param container The ViewGroup container.
+     * @param savedInstanceState The Bundle for savedInstanceState.
+     *
+     * @return the View that is created through the inflator.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,18 +76,32 @@ public class AddLotFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * Overridden onAttach() method.
+     *
+     * @param context The context of the super class.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         addLotListener = (AddLotListener) context;
     }
 
+    /**
+     * Overridden onDetach() method. Sets the listener(s) NULL.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         addLotListener = null;
     }
 
+    /**
+     * Overridden onClick method, determines the behavior of any objects that have a
+     * onClickListener.
+     *
+     * @param v The parent view.
+     */
     @Override
     public void onClick(View v) {
         if (addLotListener != null) {
@@ -90,6 +134,9 @@ public class AddLotFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Customer Listener interface. Used to display the JSON return.
+     */
     public interface AddLotListener {
         void addLot(String result);
     }

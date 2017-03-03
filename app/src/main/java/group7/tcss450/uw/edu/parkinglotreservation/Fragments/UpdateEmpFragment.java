@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Fragments;
 
 
 import android.content.Context;
@@ -25,28 +25,63 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import group7.tcss450.uw.edu.parkinglotreservation.R;
+import group7.tcss450.uw.edu.parkinglotreservation.Tasks.UpdateUserTask;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment class used to update an employee in the data base.
  */
 public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
 
+
+    /**
+     * The listener defined in the class.
+     */
     private UpdateEmpFragment.UpdateEmpListener mListener;
+
+    /**
+     * The context of the parent activity.
+     */
     private Context mContext;
+
+    /**
+     * The address EditText.
+     */
     private EditText mAddress;
+
+    /**
+     * The license EditText.
+     */
     private EditText mLicense;
+
+    /**
+     * The spinner of employee SSN's.
+     */
     private Spinner mSpinner;
+
+    /**
+     * String representing the choice of the spinner.
+     */
     private String mSpinnerChoice = null;
 
+    /**
+     * Required empty public constructor
+     */
+    public UpdateEmpFragment() {}
 
-    public UpdateEmpFragment() {
-        // Required empty public constructor
-    }
-
-
+    /**
+     * onCreateView Method.
+     *
+     * @param inflater the LayoutInflator.
+     * @param container The ViewGroup container.
+     * @param savedInstanceState The Bundle for savedInstanceState.
+     *
+     * @return the View that is created through the inflator.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +96,11 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         return v;
     }
 
+    /**
+     * Overridden onAttach() method.
+     *
+     * @param context The context of the super class.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -68,12 +108,18 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         mListener = (UpdateEmpFragment.UpdateEmpListener) context;
     }
 
+    /**
+     * Overridden onDetach() method. Sets the listener(s) NULL.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Overridden onStart() method. Ensures that the fragment loads before any logic takes place.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -92,8 +138,12 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-
-
+    /**
+     * Overridden onClick method, determines the behavior of any objects that have a
+     * onClickListener.
+     *
+     * @param v The parent view.
+     */
     @Override
     public void onClick(View v) {
         if (mListener != null) {
@@ -125,6 +175,15 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     * Overridden onItemSelected() method.  Listens for interaction with the Spinner(s) and
+     * determines their behavior.
+     *
+     * @param parent The parent spinner.
+     * @param view The parent view.
+     * @param position The current position of the spinner
+     * @param id The id of the spinner.
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSpinnerChoice = (String) parent.getItemAtPosition(position);
@@ -134,17 +193,35 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
         task.execute(url, "Populate Fields");
     }
 
+    /**
+     * Overridden method onNothingSelected().  Required to implement OnItemSelectedListener,
+     * not used in this class.
+     *
+     * @param parent The parent spinner.
+     */
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> parent) {}
 
-    }
-
+    /**
+     * Customer Listener interface. Used to display the JSON return.
+     */
     public interface UpdateEmpListener {
         void updateEmp(String result);
     }
 
+    /**
+     * Inner class Async Task, used to pre-populate the EditViews of the fragment with
+     * their current value.
+     */
     private class PopulateFields extends AsyncTask<String, Void, String> {
 
+        /**
+         * Overridden doInBackground() method.  Used to parse the JSON return from the
+         * php url that is provided to the method.
+         *
+         * @param strings array of strings provided by the execute() method.
+         * @return the result of the parsing as a string.
+         */
         @Override
         protected String doInBackground(String... strings) {
             if (strings.length != 2) {
@@ -172,6 +249,12 @@ public class UpdateEmpFragment extends Fragment implements View.OnClickListener,
             return response;
         }
 
+        /**
+         * Overridden onPostExecute() method.  Used for any additional processing required before
+         * returning from the Task.
+         *
+         * @param result The result of the parsing done in doInBackground() method.
+         */
         @Override
         protected void onPostExecute(String result) {
             try {

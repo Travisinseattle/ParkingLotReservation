@@ -3,7 +3,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group7.tcss450.uw.edu.parkinglotreservation.MainFragment"
+    tools:context="group7.tcss450.uw.edu.parkinglotreservation.Fragments.MainFragment"
     android:gravity="center"
     android:orientation="vertical">
 

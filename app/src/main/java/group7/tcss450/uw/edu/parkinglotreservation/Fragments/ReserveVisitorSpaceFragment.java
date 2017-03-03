@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Fragments;
 
 
 import android.content.Context;
@@ -17,29 +17,72 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+import group7.tcss450.uw.edu.parkinglotreservation.R;
+import group7.tcss450.uw.edu.parkinglotreservation.Tasks.ReserveSpaceTask;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment class used to reserve visitor parking spaces.
  */
 public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
 
+    /**
+     * The listener defined in the class.
+     */
     private ReserveSpaceListener mListener;
+
+    /**
+     * The License EditText.
+     */
     private EditText mLicense;
+
+    /**
+     * The date EditText.
+     */
     private EditText mDate;
+
+    /**
+     * The employee spinner.
+     */
     private Spinner mEmployee;
+
+    /**
+     * The space spinner.
+     */
     private Spinner mSpace;
+
+    /**
+     * String representing the choice of the employee spinner.
+     */
     private String mEmpChoice;
+
+    /**
+     * String representing the choice of the space spinner.
+     */
     private String mSpaceChoice;
+
+    /**
+     * The context of the parent activity.
+     */
     private Context mContext;
 
-    public ReserveVisitorSpaceFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty public constructor
+     */
+    public ReserveVisitorSpaceFragment() {}
 
-
+    /**
+     * onCreateView Method.
+     *
+     * @param inflater the LayoutInflator.
+     * @param container The ViewGroup container.
+     * @param savedInstanceState The Bundle for savedInstanceState.
+     *
+     * @return the View that is created through the inflator.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +99,11 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         return v;
     }
 
+    /**
+     * Overridden onAttach() method.
+     *
+     * @param context The context of the super class.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -63,12 +111,18 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         mListener = (ReserveSpaceListener) context;
     }
 
+    /**
+     * Overridden onDetach() method. Sets the listener(s) NULL.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Overridden onStart() method. Ensures that the fragment loads before any logic takes place.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -100,6 +154,12 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         }
     }
 
+    /**
+     * Overridden onClick method, determines the behavior of any objects that have a
+     * onClickListener.
+     *
+     * @param v The parent view.
+     */
     @Override
     public void onClick(View v) {
         if (mListener != null) {
@@ -123,6 +183,15 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         }
     }
 
+    /**
+     * Overridden onItemSelected() method.  Listens for interaction with the Spinner(s) and
+     * determines their behavior.
+     *
+     * @param parent The parent spinner.
+     * @param view The parent view.
+     * @param position The current position of the spinner
+     * @param id The id of the spinner.
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
@@ -139,9 +208,18 @@ public class ReserveVisitorSpaceFragment extends Fragment implements View.OnClic
         }
     }
 
+    /**
+     * Overridden method onNothingSelected().  Required to implement OnItemSelectedListener,
+     * not used in this class.
+     *
+     * @param parent The parent spinner.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
 
+    /**
+     * Customer Listener interface. Used to display the JSON return.
+     */
     public interface ReserveSpaceListener {
         void reserveSpace(String result);
     }

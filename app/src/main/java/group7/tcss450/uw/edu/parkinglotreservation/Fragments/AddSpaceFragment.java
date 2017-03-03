@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Fragments;
 
 
 import android.content.Context;
@@ -20,29 +20,67 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import group7.tcss450.uw.edu.parkinglotreservation.Tasks.AddNewSpaceTask;
+import group7.tcss450.uw.edu.parkinglotreservation.R;
+
 import static group7.tcss450.uw.edu.parkinglotreservation.MainActivity.APP_URL;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment class used to add parking spaces to the database.
  */
 public class AddSpaceFragment extends Fragment implements View.OnClickListener,
         AdapterView.OnItemSelectedListener, android.widget.CompoundButton.OnCheckedChangeListener {
 
-
+    /**
+     * The listener defined in the class.
+     */
     private AddSpaceFragment.AddSpaceListener mListener;
+
+    /**
+     * The context of the parent activity.
+     */
     private Context mContext;
+
+    /**
+     * The Spinner of Employees.
+     */
     private Spinner mSpinner;
+
+    /**
+     * The space EditText.
+     */
     private EditText mSpaceNum;
+
+    /**
+     * The String representing the choice made by the spinner.
+     */
     private String mSpinnerChoice = null;
+
+    /**
+     * The boolean representing the state of the covered checkbox.
+     */
     private boolean mCovChecked = false;
+
+    /**
+     * The boolean representing the state of the visitor checkbox.
+     */
     private boolean mVisChecked = false;
 
-    public AddSpaceFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty public constructor
+     */
+    public AddSpaceFragment() {}
 
-
+    /**
+     * onCreateView Method.
+     *
+     * @param inflater the LayoutInflator.
+     * @param container The ViewGroup container.
+     * @param savedInstanceState The Bundle for savedInstanceState.
+     *
+     * @return the View that is created through the inflator.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +99,11 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
         return v;
     }
 
+    /**
+     * Overridden onAttach() method.
+     *
+     * @param context The context of the super class.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -86,12 +129,21 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     * Overridden onDetach() method. Sets the listener(s) NULL.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Overridden onClick method, determines the behavior of any objects that have a
+     * onClickListener.
+     *
+     * @param v The parent view.
+     */
     @Override
     public void onClick(View v) {
         if (mListener != null) {
@@ -149,6 +201,9 @@ public class AddSpaceFragment extends Fragment implements View.OnClickListener,
         mCovChecked = isChecked;
     }
 
+    /**
+     * Customer Listener interface. Used to display the JSON return.
+     */
     public interface AddSpaceListener {
         void addSpace(String result);
     }

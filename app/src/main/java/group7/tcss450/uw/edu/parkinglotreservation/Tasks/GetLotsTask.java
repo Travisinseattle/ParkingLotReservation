@@ -1,4 +1,4 @@
-package group7.tcss450.uw.edu.parkinglotreservation;
+package group7.tcss450.uw.edu.parkinglotreservation.Tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,24 +13,46 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import group7.tcss450.uw.edu.parkinglotreservation.Fragments.AddLotFragment;
+import group7.tcss450.uw.edu.parkinglotreservation.Fragments.MainFragment;
+
 /**
  * Created by Travis Holloway on 2/27/2017.
  * A Task to retrieve all Lots.
  */
+public class GetLotsTask extends AsyncTask<String, Void, String> {
 
-class GetLotsTask extends AsyncTask<String, Void, String> {
-
+    /**
+     * The addLotListener passed to the class.
+     */
     private AddLotFragment.AddLotListener mListener;
+
+    /**
+     * The getAllLotsListener passed to the class.
+     */
     private MainFragment.GetAllLots getListener;
 
-    GetLotsTask(final MainFragment.GetAllLots getAllLots,
-                final AddLotFragment.AddLotListener addLotListener) {
+    /**
+     * The constructor for the class.
+     *
+     * @param getAllLots The getAllLotsListener passed to the class.
+     * @param addLotListener The addLotListener passed to the class.
+     */
+    public GetLotsTask(final MainFragment.GetAllLots getAllLots,
+                       final AddLotFragment.AddLotListener addLotListener) {
         this.getListener = getAllLots;
         this.mListener = addLotListener;
     }
 
+    /**
+     * Overridden doInBackground() method.  Used to parse the JSON return from the
+     * php url that is provided to the method.
+     *
+     * @param strings array of strings provided by the execute() method.
+     * @return the result of the parsing as a string.
+     */
     @Override
-    protected String doInBackground(String... strings) {
+    protected String doInBackground(final String... strings) {
         if (strings.length != 2) {
             throw new IllegalArgumentException("8 String arguments required.");
         }
@@ -56,6 +78,12 @@ class GetLotsTask extends AsyncTask<String, Void, String> {
         return response;
     }
 
+    /**
+     * Overridden onPostExecute() method.  Used for any additional processing required before
+     * returning from the Task.
+     *
+     * @param result The result of the parsing done in doInBackground() method.
+     */
     @Override
     protected void onPostExecute(String result) {
 
@@ -66,7 +94,13 @@ class GetLotsTask extends AsyncTask<String, Void, String> {
         FireListener(result);
     }
 
-    private void FireListener(String result) {
+    /**
+     * A method to utilize the customer listener interface and pass the result back
+     * to MainActivity.
+     *
+     * @param result The final result of the parsing of the json request.
+     */
+    private void FireListener(final String result) {
         final List<String> lots = new ArrayList<>();
         try {
             final JSONArray jsonArray = new JSONArray(result);

@@ -17,7 +17,6 @@
     <string name="address_hint">Address</string>
     <string name="license_hint">License #</string>
     <string name="add_lot_text">Add New Parking Lot</string>
-    <string name="add_lot_php">addLot.php?lot_name=</string>
     <string name="user_error">Value Cannot Be Blank, Please Try Again</string>
     <string name="ssn_hint">SSN: 555–55-5555</string>
     <string name="update_employee_text">SSN of Employee To Update</string>

@@ -81,7 +81,7 @@ public class AddNewLotTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-            if (result.equals("")) {
+            if (result.equals("{\"result\", \"yay\"}")) {
                 result = "New Lot '" + lotName + "' Was Added Successfully";
             }
 

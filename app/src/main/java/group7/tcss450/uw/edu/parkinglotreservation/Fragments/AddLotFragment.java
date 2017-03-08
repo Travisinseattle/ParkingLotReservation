@@ -118,11 +118,11 @@ public class AddLotFragment extends Fragment implements View.OnClickListener {
                     } else {
                         final AsyncTask<String, Void, String> task =
                                 new AddNewLotTask(addLotListener, mNameEdit.getText().toString());
-                        final String url = APP_URL + getString(R.string.add_lot_php) +
-                                mNameEdit.getText().toString() + "&loc=" +
-                                mLocEdit.getText().toString() +
-                                "&cap=" + mCapEdit.getText() + "&nfloor=" +
-                                mFloorEdit.getText().toString();
+                        final String url = APP_URL +
+                                "addLot.php?lot_name=" + mNameEdit.getText().toString() +
+                                "&loc=" + mLocEdit.getText().toString() +
+                                "&cap=" + mCapEdit.getText().toString() +
+                                "&nfloor=" + mFloorEdit.getText().toString();
                         Log.e("URL: ", url);
                         task.execute(url, "Add New Lot");
                         getActivity().onBackPressed();
